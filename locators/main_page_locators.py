@@ -25,3 +25,8 @@ class MainPageLocators:
         "SUBURBS_OF_MOSCOW_ANSWER": [By.XPATH, "//p[contains(text(),'Да, обязательно. Всем самокатов! И Москве, и Московской области.')]"]
     }
     MAIN_PAGE_HEADER = [By.XPATH, "//*[contains(@class,'Home_Header')and contains(text(),'Самокат ')]"]
+    COOKIE_AGREEMENT = [By.ID, "rcc-confirm-button"]
+    HEADER_ORDER_BUTTON = [By.XPATH, "//button[contains(@class,'Button_Button') and contains(text(),'Заказать')]"]
+    YANDEX_LOGO = [By.XPATH, "//a[contains(@href,'//yandex.ru') and contains(@class,'Header_Logo')]"]
+
+

@@ -21,3 +21,4 @@ class OrderScooterLocators:
     CONFIRM_CREATE_ORDER = [By.XPATH, "//div[contains(@class, 'Order_Buttons')]//button[contains(text(), 'Да')]"]
     CONFIRMATION_OF_CREATED_ORDER_TITLE = [By.XPATH, "//div[contains(@class, 'Order_Modal') and contains(text(), 'Заказ оформлен')]"]
     CHECK_STATUS = [By.XPATH, "//div[contains(@class, 'Order_NextButton')]//button[contains(@class,'Button_Button')]"]
+    SCOOTER_LOGO = [By.XPATH, "//a[contains(@href,'/') and contains(@class,'Header_LogoScooter')]"]

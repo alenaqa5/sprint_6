@@ -1,37 +1,26 @@
-from locators.base_page_locators import BasePageLocators
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-base_page_locators = BasePageLocators()
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 
 
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    @allure.step('Нажать на логотип яндекса')
-    def click_on_yandex_logo(self):
-        self.driver.find_element(*base_page_locators.YANDEX_LOGO).click()
+    def wait_and_find_element(self, locator) -> WebElement:
+        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(locator))
+        return self.driver.find_element(*locator)
 
-    @allure.step('Проверить редирект на страницу яндекса')
-    def check_new_tab_after_click_on_yandex_logo(self):
+    def scroll_to_element(self, element) -> WebElement:
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        return WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable(element))
+
+    @allure.step('Проверить редирект на новую вкладку')
+    def check_new_tab_url(self, expected_url):
         tabs = self.driver.window_handles
         self.driver.switch_to.window(tabs[-1])
-        expected_url = "https://dzen.ru/?yredirect=true"
         WebDriverWait(self.driver, 10).until(
-            EC.url_to_be(expected_url)
-        )
+            expected_conditions.url_to_be(expected_url))
         assert self.driver.current_url == expected_url
 
-    @allure.step('Нажать на логотип "самокат"')
-    def click_on_scooter_logo(self):
-        self.driver.find_element(*base_page_locators.SCOOTER_LOGO).click()
-
-    @allure.step('Нажать на кнопку "заказать" в заголовке страницы')
-    def click_on_header_order_button(self):
-        self.driver.find_element(*base_page_locators.HEADER_ORDER_BUTTON).click()
-
-    @allure.step('Принять куки')
-    def accept_cookie(self):
-        self.driver.find_element(*base_page_locators.COOKIE_AGREEMENT).click()
